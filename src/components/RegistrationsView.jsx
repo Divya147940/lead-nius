@@ -12,7 +12,7 @@ const RegistrationsView = ({ onBack }) => {
   const fetchRegistrations = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/registrations');
+      const response = await fetch('/api/registrations');
       if (response.ok) {
         const data = await response.json();
         setRegistrations(data);
