@@ -1,6 +1,13 @@
 import React from 'react';
+import { useCart } from '../context/CartContext';
 
 const ProductCard = ({ product, onProductClick }) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    addToCart(product);
+  };
   return (
     <div className="product-card" onClick={() => onProductClick(product.id)}>
       <div className="card-image-wrap">
@@ -34,6 +41,9 @@ const ProductCard = ({ product, onProductClick }) => {
             <span className="original-price">${product.originalPrice}</span>
           </div>
         </div>
+        <button className="btn-add-to-cart-large" onClick={handleAddToCart}>
+          ADD TO CART
+        </button>
       </div>
     </div>
   );

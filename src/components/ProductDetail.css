@@ -141,6 +141,24 @@
     transform: scale(1.02);
 }
 
+.btn-add-to-cart {
+    background: white;
+    color: #121c2a;
+    padding: 1rem 3rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: 2px solid #e2e8f0;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-add-to-cart:hover {
+    background: #f8fafc;
+    border-color: #004ac6;
+    color: #004ac6;
+}
+
 .detail-image-main {
     position: relative;
     aspect-ratio: 16 / 9;

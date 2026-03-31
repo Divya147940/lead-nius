@@ -10,6 +10,8 @@ import Footer from './components/Footer';
 import RegistrationModal from './components/RegistrationModal';
 import RegistrationsView from './components/RegistrationsView';
 import { products } from './data/products';
+import { CartProvider } from './context/CartContext';
+import Cart from './components/Cart';
 import './App.css';
 
 function App() {
@@ -35,59 +37,63 @@ function App() {
   });
 
   return (
-    <div className="app">
-      <Navbar 
-        onSearch={setSearchQuery} 
-        onRegisterClick={() => setIsModalActive(true)} 
-        onSoftwareClick={() => setSelectedProductId(null)}
-        isDetailView={!!selectedProductId}
-      />
-      
-      <div className="app-container">
-        {showRegistrations ? (
-          <RegistrationsView onBack={() => setShowRegistrations(false)} />
-        ) : (
-          <>
-            {!selectedProduct && (
-              <Sidebar 
-                activeCategory={activeCategory} 
-                onCategoryChange={(cat) => {
-                  setActiveCategory(cat);
-                  setSelectedProductId(null); // Clear detail view on category change
-                }} 
-              />
-            )}
-            
-            <main className={`main-content ${selectedProduct ? 'full-width' : ''}`}>
-              <div className={`content-body ${selectedProduct ? 'content-body-detail' : ''}`}>
-                {selectedProduct ? (
-                  <ProductDetail 
-                    product={selectedProduct} 
-                    onBack={() => setSelectedProductId(null)} 
-                  />
-                ) : (
-                  <>
-                    <Hero />
-                    <ProductGrid 
-                      products={filteredProducts} 
-                      onProductClick={setSelectedProductId} 
+    <CartProvider>
+      <div className="app">
+        <Navbar 
+          onSearch={setSearchQuery} 
+          onRegisterClick={() => setIsModalActive(true)} 
+          onSoftwareClick={() => setSelectedProductId(null)}
+          isDetailView={!!selectedProductId}
+        />
+        
+        <div className="app-container">
+          {showRegistrations ? (
+            <RegistrationsView onBack={() => setShowRegistrations(false)} />
+          ) : (
+            <>
+              {!selectedProduct && (
+                <Sidebar 
+                  activeCategory={activeCategory} 
+                  onCategoryChange={(cat) => {
+                    setActiveCategory(cat);
+                    setSelectedProductId(null); // Clear detail view on category change
+                  }} 
+                />
+              )}
+              
+              <main className={`main-content ${selectedProduct ? 'full-width' : ''}`}>
+                <div className={`content-body ${selectedProduct ? 'content-body-detail' : ''}`}>
+                  {selectedProduct ? (
+                    <ProductDetail 
+                      product={selectedProduct} 
+                      onBack={() => setSelectedProductId(null)} 
                     />
-                    <BottomSection />
-                  </>
-                )}
-              </div>
-            </main>
-          </>
-        )}
-      </div>
-      
-      <RegistrationModal 
-        isActive={isModalActive} 
-        onClose={() => setIsModalActive(false)} 
-      />
+                  ) : (
+                    <>
+                      <Hero />
+                      <ProductGrid 
+                        products={filteredProducts} 
+                        onProductClick={setSelectedProductId} 
+                      />
+                      <BottomSection onRegisterClick={() => setIsModalActive(true)} />
+                    </>
+                  )}
+                </div>
+              </main>
+            </>
+          )}
+        </div>
+        
+        <RegistrationModal 
+          isActive={isModalActive} 
+          onClose={() => setIsModalActive(false)} 
+        />
 
-      {selectedProductId && <Footer />}
-    </div>
+        {selectedProductId && <Footer />}
+        
+        <Cart />
+      </div>
+    </CartProvider>
   );
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BottomSection = () => {
+const BottomSection = ({ onRegisterClick }) => {
   return (
     <section className="bottom-section">
       <div className="card-collaborate">
@@ -9,7 +9,7 @@ const BottomSection = () => {
         <p>
           Share insights, request reviews, and find strategic partners for your next big software deployment.
         </p>
-        <button className="btn-white">Join Leadnius Community</button>
+        <button className="btn-white" onClick={onRegisterClick}>Join Leadnius Community</button>
       </div>
       <div className="card-ai-matching">
         <div className="sparkle-icon"><i className="fas fa-sparkles"></i></div>

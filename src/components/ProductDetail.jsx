@@ -1,7 +1,9 @@
 import React from 'react';
+import { useCart } from '../context/CartContext';
 import './ProductDetail.css';
 
 const ProductDetail = ({ product, onBack }) => {
+  const { addToCart } = useCart();
   if (!product) return null;
 
   const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
@@ -40,6 +42,7 @@ const ProductDetail = ({ product, onBack }) => {
                 </div>
               </div>
               <button className="btn-buy-now">Buy now</button>
+              <button className="btn-add-to-cart" onClick={() => addToCart(product)}>Add to cart</button>
             </div>
 
             <div className="detail-image-main">

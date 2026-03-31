@@ -1,6 +1,8 @@
 import React from 'react';
+import { useCart } from '../context/CartContext';
 
 const Navbar = ({ onSearch, onRegisterClick, onSoftwareClick, isDetailView }) => {
+  const { cartCount, setIsCartOpen } = useCart();
   return (
     <header className="navbar">
       <div className={`navbar-container ${isDetailView ? 'navbar-container-detail' : ''}`}>
@@ -33,6 +35,13 @@ const Navbar = ({ onSearch, onRegisterClick, onSoftwareClick, isDetailView }) =>
           <span className="badge-outcomes">OUTCOMES <span className="badge-inner-new">NEW</span></span>
         </nav>
         <div className="navbar-right">
+          <div className="cart-icon-wrap" onClick={() => setIsCartOpen(true)}>
+            <div className="cart-icon-inner">
+              <i className="fas fa-shopping-cart"></i>
+              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+            </div>
+            <span className="cart-text">Cart</span>
+          </div>
           <button className="btn-login" onClick={onRegisterClick}>Register Now</button>
         </div>
 
