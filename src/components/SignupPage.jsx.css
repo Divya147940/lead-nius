@@ -14,7 +14,7 @@
 /* Left Column Styling */
 .signup-left {
   flex: 0 0 450px;
-  background: #020617;
+  background: linear-gradient(to bottom, #020611, #090f1f);
   color: #f8fafc;
   padding: 4rem 3rem;
   position: relative;

@@ -1,3 +1,6 @@
+/* Import Outfit */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
 .signup-page {
   display: flex;
   height: 100vh;
@@ -12,8 +15,7 @@
   overflow: hidden;
 }
 
-/* Import Outfit */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
 
 /* Left Branding Side */
 .signup-left {

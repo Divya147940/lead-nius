@@ -71,7 +71,7 @@ const SignupPage = ({ onBack }) => {
   return (
     <div className="signup-page">
       {/* Left Column: Constellation Branding (100% Exact Mesh) */}
-      <div className="signup-left" style={{ backgroundColor: '#020611', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="signup-left" style={{ background: 'linear-gradient(to bottom, #020611, #090f1f)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <img 
             src={leadniusBanner} 
             alt="Leadnius Community - Join the Premier Community for Startup Founders" 
