@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm run dev:client",
     "dev:client": "vite",
-    "dev:server": "nodemon api/index.js",
+    "dev:server": "cd fastapi-backend && .\\venv\\Scripts\\uvicorn main:app --port 5000 --reload",
     "full-app": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
 
     "build": "vite build",

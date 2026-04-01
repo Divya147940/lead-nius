@@ -2,87 +2,8 @@ import React from 'react';
 import { useCart } from '../context/CartContext';
 import './Cart.css';
 
-const loadRazorpayScript = () => {
-  return new Promise((resolve) => {
-    if (document.getElementById('razorpay-script')) {
-      resolve(true);
-      return;
-    }
-    const script = document.createElement('script');
-    script.id = 'razorpay-script';
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
-    document.body.appendChild(script);
-  });
-};
-
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity, clearCart, cartTotal, isCartOpen, setIsCartOpen } = useCart();
-  const [isProcessing, setIsProcessing] = React.useState(false);
-
-  const handleCheckout = async () => {
-    setIsProcessing(true);
-
-    const scriptLoaded = await loadRazorpayScript();
-    if (!scriptLoaded) {
-      alert('Failed to load payment gateway. Please check your internet connection.');
-      setIsProcessing(false);
-      return;
-    }
-
-    try {
-      // Amount in paise (INR) — 1 USD ~ 83 INR, adjust exchange rate as needed
-      const amountInPaise = Math.round(cartTotal * 83 * 100);
-
-      // Call backend to create order — key_id comes from backend, never stored in frontend
-      const res = await fetch('/api/create-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: amountInPaise }),
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        alert(`Payment setup failed: ${err.error}`);
-        setIsProcessing(false);
-        return;
-      }
-
-      const { order_id, amount, currency, key_id } = await res.json();
-
-      const options = {
-        key: key_id,           // ← comes from backend, never in frontend .env
-        amount: amount,
-        currency: currency,
-        order_id: order_id,
-        name: 'Leadnius',
-        description: `Order of ${cartItems.length} item(s)`,
-        image: '/favicon.svg',
-        handler: function (response) {
-          alert(`✅ Payment Successful!\nPayment ID: ${response.razorpay_payment_id}`);
-          clearCart();
-          setIsCartOpen(false);
-        },
-        prefill: { name: '', email: '', contact: '' },
-        notes: { items: cartItems.map(i => i.name).join(', ') },
-        theme: { color: '#2361ff' },
-        modal: { ondismiss: () => setIsProcessing(false) }
-      };
-
-      const rzp = new window.Razorpay(options);
-      rzp.on('payment.failed', function (response) {
-        alert(`❌ Payment Failed: ${response.error.description}`);
-        setIsProcessing(false);
-      });
-      rzp.open();
-    } catch (err) {
-      alert('Could not connect to payment server. Please try again.');
-      setIsProcessing(false);
-    }
-
-    setIsProcessing(false);
-  };
 
   if (!isCartOpen) return null;
 
@@ -146,14 +67,7 @@ const Cart = () => {
               <p className="footer-note">Free worldwide shipping & 60-day money back guarantee.</p>
               <div className="footer-actions">
                 <button className="btn-continue" onClick={() => setIsCartOpen(false)}>CONTINUE SHOPPING</button>
-                <button
-                  className="btn-checkout-now"
-                  onClick={handleCheckout}
-                  disabled={isProcessing}
-                  style={{ opacity: isProcessing ? 0.7 : 1, cursor: isProcessing ? 'wait' : 'pointer' }}
-                >
-                  {isProcessing ? 'LOADING...' : 'PROCEED TO CHECKOUT'}
-                </button>
+                <button className="btn-checkout-now">PROCEED TO CHECKOUT</button>
               </div>
               <button className="btn-clear-all" onClick={clearCart}>Clear All Items</button>
             </div>

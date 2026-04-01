@@ -1,4 +1,4 @@
-const { Pool } = require('pg');
+w2 const { Pool } = require('pg');
 
 const DATABASE_URL = 'postgresql://postgres:Divyanshi%40123@127.0.0.1:5432/lead_genius';
 
