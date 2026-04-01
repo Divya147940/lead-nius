@@ -20,6 +20,8 @@ app.get('/', (req, res) => {
 app.post('/api/register', async (req, res) => {
   const { 
     fullName, 
+    email,
+    password,
     linkedin, 
     startupName, 
     startupUrl, 
@@ -33,6 +35,8 @@ app.post('/api/register', async (req, res) => {
     const registration = await prisma.registration.create({
       data: {
         fullName,
+        email,
+        password,
         linkedin,
         startupName,
         startupUrl,

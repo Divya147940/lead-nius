@@ -32,7 +32,7 @@ const Navbar = ({ onSearch, onRegisterClick, onSoftwareClick, isDetailView }) =>
           <a href="#" className={isDetailView ? 'active' : ''}>
             {isDetailView ? 'Software Detail' : 'Collaborate'}
           </a>
-          <span className="badge-outcomes">OUTCOMES <span className="badge-inner-new">NEW</span></span>
+
         </nav>
         <div className="navbar-right">
           <div className="cart-icon-wrap" onClick={() => setIsCartOpen(true)}>

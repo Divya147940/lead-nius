@@ -8,7 +8,7 @@ const Hero = () => {
         Engineered tools for <span>Digital Architects</span>
       </h2>
       <p className="hero-subtitle">
-        Leadnius is the curated platform where elite teams find software that doesn't just work—it creates outcomes.
+        Leadnius is the curated platform where elite teams find software that doesn't just work—it drives results.
       </p>
     </section>
   );

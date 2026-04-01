@@ -7,7 +7,7 @@ import BottomSection from './components/BottomSection';
 
 import ProductDetail from './components/ProductDetail';
 import Footer from './components/Footer';
-import RegistrationModal from './components/RegistrationModal';
+import SignupPage from './components/SignupPage';
 import RegistrationsView from './components/RegistrationsView';
 import { products } from './data/products';
 import { CartProvider } from './context/CartContext';
@@ -17,9 +17,9 @@ import './App.css';
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('shop');
-  const [isModalActive, setIsModalActive] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [showRegistrations, setShowRegistrations] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
 
   const selectedProduct = products.find(p => p.id === selectedProductId);
 
@@ -41,14 +41,20 @@ function App() {
       <div className="app">
         <Navbar 
           onSearch={setSearchQuery} 
-          onRegisterClick={() => setIsModalActive(true)} 
-          onSoftwareClick={() => setSelectedProductId(null)}
+          onRegisterClick={() => setShowSignup(true)} 
+          onSoftwareClick={() => {
+            setSelectedProductId(null);
+            setShowSignup(false);
+            setShowRegistrations(false);
+          }}
           isDetailView={!!selectedProductId}
         />
         
         <div className="app-container">
           {showRegistrations ? (
             <RegistrationsView onBack={() => setShowRegistrations(false)} />
+          ) : showSignup ? (
+            <SignupPage onBack={() => setShowSignup(false)} />
           ) : (
             <>
               {!selectedProduct && (
@@ -75,7 +81,7 @@ function App() {
                         products={filteredProducts} 
                         onProductClick={setSelectedProductId} 
                       />
-                      <BottomSection onRegisterClick={() => setIsModalActive(true)} />
+                      <BottomSection onRegisterClick={() => setShowSignup(true)} />
                     </>
                   )}
                 </div>
@@ -83,13 +89,6 @@ function App() {
             </>
           )}
         </div>
-        
-        <RegistrationModal 
-          isActive={isModalActive} 
-          onClose={() => setIsModalActive(false)} 
-        />
-
-        {selectedProductId && <Footer />}
         
         <Cart />
       </div>

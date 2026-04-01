@@ -349,28 +349,7 @@ body {
     border-bottom: 2px solid var(--primary-blue);
 }
 
-.badge-outcomes {
-    background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
-    color: var(--white);
-    padding: 0.3rem 0.5rem 0.3rem 0.75rem;
-    border-radius: 999px;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-}
 
-.badge-inner-new {
-    background: rgba(255, 255, 255, 0.25);
-    color: white;
-    padding: 0.15rem 0.45rem;
-    border-radius: 999px;
-    font-size: 0.6rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-}
 
 .navbar-right {
     display: flex;
@@ -415,28 +394,7 @@ body {
     border-bottom: 2px solid var(--primary-blue);
 }
 
-.badge-outcomes {
-    background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
-    color: var(--white);
-    padding: 0.3rem 0.5rem 0.3rem 0.75rem;
-    border-radius: 999px;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-}
 
-.badge-inner-new {
-    background: rgba(255, 255, 255, 0.25);
-    color: white;
-    padding: 0.15rem 0.45rem;
-    border-radius: 999px;
-    font-size: 0.6rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-}
 
 .navbar-right {
     display: flex;
@@ -463,7 +421,7 @@ body {
 
 /* Content Body */
 .content-body {
-    padding: 2.5rem 2.5rem;
+    padding: 1rem 2.5rem 2.5rem;
     width: 100%;
 }
 
@@ -486,7 +444,7 @@ body {
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.75rem;
 }
 
 .trending-line {
