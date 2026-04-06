@@ -1,0 +1,58 @@
+/* Hero component styles */
+.hero-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.hero-left h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.product-count {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.hero-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sort-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.sort-select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sort-select {
+  appearance: none;
+  background: white;
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sort-icon {
+  position: absolute;
+  right: 1rem;
+  pointer-events: none;
+  font-size: 0.75rem;
+  color: #64748b;
+}
