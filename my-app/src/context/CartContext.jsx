@@ -5,16 +5,27 @@ const CartContext = createContext();
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState(() => {
-    // Load from local storage on initial load
-    const savedCart = localStorage.getItem('cart');
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
+  const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Sync with local storage
+  // Load from local storage on initial mount
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cartItems));
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      try {
+        setCartItems(JSON.parse(savedCart));
+      } catch (err) {
+        console.error('Error parsing cart from localStorage:', err);
+      }
+    }
+  }, []);
+
+  // Sync with local storage on changes
+  useEffect(() => {
+    // Only save to localStorage if we are in the browser
+    if (typeof window !== 'undefined') {
+       localStorage.setItem('cart', JSON.stringify(cartItems));
+    }
   }, [cartItems]);
 
   const addToCart = (product) => {

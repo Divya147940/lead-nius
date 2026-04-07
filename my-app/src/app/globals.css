@@ -392,8 +392,8 @@ body {
 
 .cart-badge {
     position: absolute;
-    top: 2px;
-    right: 2px;
+    top: -8px;
+    right: -12px;
     background-color: #f82a46;
     color: white;
     font-size: 0.65rem;
@@ -405,6 +405,7 @@ body {
     align-items: center;
     justify-content: center;
     border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .search-bar {

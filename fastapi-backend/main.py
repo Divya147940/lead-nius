@@ -17,19 +17,31 @@ from database import engine, get_db
 RAZORPAY_API_KEY    = os.getenv("RAZORPAY_API_KEY")
 RAZORPAY_API_SECRET = os.getenv("RAZORPAY_API_SECRET")
 
+if not RAZORPAY_API_KEY or not RAZORPAY_API_SECRET:
+    print("⚠️  WARNING: RAZORPAY_API_KEY or RAZORPAY_API_SECRET is not set in fastapi-backend/.env")
+
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 @app.get("/")
 def health_check():
     return {"message": "Lead Genius Backend API with FastAPI is running..."}
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request, exc):
+    print(f"🔥 GLOBAL ERROR: {str(exc)}")
+    return JSONResponse(
+        status_code=500,
+        content={"error": f"Internal Server Error: {str(exc)}"}
+    )
 
 @app.post("/api/register", response_model=schemas.RegistrationResponse, status_code=status.HTTP_201_CREATED)
 def register(reg_in: schemas.RegistrationCreate, db: Session = Depends(get_db)):
@@ -67,23 +79,35 @@ def get_registrations(db: Session = Depends(get_db)):
 
 @app.post("/api/create-order")
 def create_order(body: dict):
-    print(f"📦 Received order request: {body}")
+    if not RAZORPAY_API_KEY or not RAZORPAY_API_SECRET:
+        return JSONResponse(
+            status_code=500,
+            content={"error": "Razorpay credentials missing in backend environment"}
+        )
+
     try:
         amount = body.get("amount")
-        if not amount:
-            print("❌ Error: Amount missing in request body")
+        if amount is None:
             raise HTTPException(status_code=400, detail="Amount is required")
+        
+        # Razorpay strictly requires an integer for the amount (paise)
+        try:
+            amount_val = int(float(amount))
+        except (ValueError, TypeError):
+            raise HTTPException(status_code=400, detail="Invalid amount format")
 
-        print(f"🔌 Connecting to Razorpay with Key: {RAZORPAY_API_KEY[:10]}...")
+        if amount_val <= 0:
+            raise HTTPException(status_code=400, detail="Amount must be greater than 0")
+
         client = razorpay.Client(auth=(RAZORPAY_API_KEY, RAZORPAY_API_SECRET))
         
-        print("💸 Creating Razorpay order...")
-        order = client.order.create({
-            "amount": int(amount),
+        order_params = {
+            "amount": amount_val,
             "currency": "INR",
             "payment_capture": 1
-        })
-        print(f"✅ Order Created Successfully: {order['id']}")
+        }
+        
+        order = client.order.create(order_params)
         
         return {
             "order_id": order["id"],
@@ -91,6 +115,8 @@ def create_order(body: dict):
             "currency": order["currency"],
             "key_id": RAZORPAY_API_KEY
         }
+    except HTTPException as he:
+        return JSONResponse(status_code=he.status_code, content={"error": he.detail})
     except Exception as e:
-        print(f"🔥 Razorpay Error: {str(e)}")
-        return JSONResponse(status_code=500, content={"error": f"Failed to create payment order: {str(e)}"})
+        print(f"Razorpay Order Error: {str(e)}")
+        return JSONResponse(status_code=500, content={"error": f"Razorpay error: {str(e)}"})

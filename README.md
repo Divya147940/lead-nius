@@ -1,16 +1,57 @@
-# React + Vite
+# Lead Genius - SaaS Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A premium SaaS platform built with Next.js and FastAPI.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Frontend**: Next.js (React), Vanilla CSS (Premium Glassmorphism Design)
+- **Backend**: FastAPI (Python), SQLAlchemy, PostgreSQL
+- **Payments**: Razorpay Integration
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js (v18+)
+- Python (3.9+)
+- PostgreSQL
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Installation
+
+1. Clone the repository
+2. Install frontend dependencies:
+   ```bash
+   cd my-app
+   npm install
+   ```
+3. Setup the backend:
+   ```bash
+   cd fastapi-backend
+   python -m venv venv
+   .\venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+### Running the Application
+
+Each service can be run separately according to user preference:
+
+#### Option 1: Run Separately (Recommended)
+- **Frontend**: `cd my-app && npm run dev` (Available at `http://localhost:3000`)
+- **Backend**: `cd fastapi-backend && .\venv\Scripts\uvicorn main:app --port 5000 --reload` (Available at `http://localhost:5000`)
+
+#### Option 2: Run Concurrently from Root
+1. Install root dev dependencies:
+   ```bash
+   npm install
+   ```
+2. Run both:
+   ```bash
+   npm run dev
+   ```
+
+## Features
+
+- **Dynamic Catalog**: Browse and filter lead generation tools.
+- **Razorpay Integration**: Secure, backend-driven payment flow.
+- **Responsive Registration**: Modern signup flow with database persistence.

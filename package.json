@@ -4,38 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run dev:client",
-    "dev:client": "vite",
-    "dev:server": "cd fastapi-backend && .\\venv\\Scripts\\uvicorn main:app --port 5000 --reload",
-    "full-app": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-
-    "build": "vite build",
-    "vercel-build": "npx prisma generate && vite build",
-    "postinstall": "npx prisma generate",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd my-app && npm run dev",
+    "dev:backend": "cd fastapi-backend && .\\venv\\Scripts\\uvicorn main:app --port 5000 --reload",
+    "build:frontend": "cd my-app && npm run build",
+    "lint:frontend": "cd my-app && npm run lint"
   },
-  "dependencies": {
-    "@prisma/client": "^6.19.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "pg": "^8.12.0",
-    "prisma": "^6.19.2",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@eslint/js": "^9.39.4",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "concurrently": "^9.2.1",
-    "eslint": "^9.39.4",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.5.2",
-    "globals": "^17.4.0",
-    "nodemon": "^3.1.2",
-    "vite": "^8.0.1"
+    "concurrently": "^9.1.0"
   }
 }
